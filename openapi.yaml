@@ -36,7 +36,7 @@ paths:
                   example: 1250
                 gameMode:
                   type: string
-                  example: "10min"
+                  example: "10+0"
               required:
                 - minRating
                 - maxRating
@@ -68,7 +68,7 @@ paths:
         "500":
           description: Internal server error
 
-  /restoreMatch/{id}:
+  /match/{id}/restore:
     post:
       summary: Restore abandoned match by id
       description: Restore abandoned match due to server termination
@@ -92,12 +92,10 @@ paths:
                   id: "39aef4b8-60c1-70f0-eca9-e2e5cbdf5e99"
                   rating: 1200.0
                   newRatings: [1270.1, 1205.3, 1120.4]
-                  newRDs: [100.1, 200.2, 300.3]
                 player2:
                   id: "199e84a8-6031-70c7-efe5-89fdf66ba8a6"
                   rating: 1200.2
                   newRatings: [1270.1, 1205.2, 1120.3]
-                  newRDs: [100.1, 200.2, 300.3]
                 gameMode: "10min"
                 server: 13.211.190.175
                 createdAt: "2025-02-20T04:25:37.975024301Z"
@@ -155,7 +153,7 @@ paths:
         "500":
           description: Internal server error
 
-  /matchRecord/{id}:
+  /match/{id}:
     get:
       summary: Get match record by match id
       description: Get match record by match id

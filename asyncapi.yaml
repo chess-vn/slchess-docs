@@ -27,11 +27,16 @@ channels:
         oneOf:
           - $ref: "#/components/messages/GameState"
           - $ref: "#/components/messages/EndGameState"
+          - $ref: "#/components/messages/DrawOffer"
     publish:
       operationId: sendGameData
       summary: Send game data to the server.
       message:
-        $ref: "#/components/messages/GameData"
+        oneOf:
+          - $ref: "#/components/messages/GameSync"
+          - $ref: "#/components/messages/GameData"
+          - $ref: "#/components/messages/GameControlResign"
+          - $ref: "#/components/messages/GameControlOfferDraw"
 
   /queueing:
     subscribe:
@@ -85,7 +90,7 @@ components:
                   format: float
           gameMode:
             type: string
-            example: "10min"
+            example: "10+0"
           server:
             type: string
             format: ipv4
@@ -116,8 +121,75 @@ components:
             type: string
             format: date-time
             example: "2025-01-23T11:34:59.491904972+07:00"
+
+    GameControlResign:
+      name: GameControlResign
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            example: "gameData"
+          data:
+            type: object
+            properties:
+              action:
+                type: string
+                example: "resign"
+          created_at:
+            type: string
+            format: date-time
+            example: "2025-01-23T11:34:59.491904972+07:00"
+
+    GameControlOfferDraw:
+      name: GameControlOfferDraw
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            example: "gameData"
+          data:
+            type: object
+            properties:
+              action:
+                type: string
+                example: "offerDraw"
+          created_at:
+            type: string
+            format: date-time
+            example: "2025-01-23T11:34:59.491904972+07:00"
+
+    GameSync:
+      name: GameSync
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            example: "gameData"
+          data:
+            type: object
+            properties:
+              action:
+                type: string
+                example: "sync"
+          created_at:
+            type: string
+            format: date-time
+            example: "2025-01-23T11:34:59.491904972+07:00"
+
+    DrawOffer:
+      name: DrawOffer
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            example: "drawOffer"
+
     EndGameState:
-      name: GameState1
+      name: EndGameState
       payload:
         type: object
         properties:
@@ -141,8 +213,9 @@ components:
                 items:
                   type: string
                 example: ["8m35.849808716s", "9m38.185241841s"]
+
     GameState:
-      name: GameState2
+      name: GameState
       payload:
         type: object
         properties:
